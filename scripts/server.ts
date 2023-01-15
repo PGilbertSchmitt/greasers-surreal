@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import { watch } from 'chokidar';
-import { exec, spawn } from 'child_process';
+import * as R from 'ramda';
+import { ChildProcessWithoutNullStreams, exec, spawn } from 'child_process';
 
 const SURREAL = 'surreal';
 const SERVER_ARGS = ['start', '--log', 'debug', '--user', 'root', '--pass', 'root', 'memory'];
@@ -10,12 +11,21 @@ const main = async () => {
     const files = (
         await fs.readdir('./queries')
     ).map(file => `./queries/${file}`);
+
+    // The non-seed files start with `_` so that they can be differentiated from the
+    // seed files. They need to be run first so that the seeds aren't executed before
+    // their tables are defined.
+    const [
+        tableFiles,
+        seedFiles,
+    ] = R.partition(file => file[0] === '_', files);
     
-    let serverProcess;
+    let serverProcess: ChildProcessWithoutNullStreams;
     
     const bootup = async () => {
         serverProcess = startServer();
-        await runQueries(files);
+        await runQueries(tableFiles);
+        await runQueries(seedFiles);
     }
     
     bootup();
