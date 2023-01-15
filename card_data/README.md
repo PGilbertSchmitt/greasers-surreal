@@ -1,0 +1,3 @@
+# Card Data
+
+This data was extracted from a [Google spreadsheet](https://docs.google.com/spreadsheets/d/1lsy7lIwBe-DWOi2PALZPf5DgXHx9MEvKfRw1GaWQkzg/edit#gid=13) organized by some mighty fine people. Cards Against Humanity is available under a Attribution-NonCommercial-ShareAlike license (CC BY-NC-SA), so the work (ie. the cards) is free to use as long as attribution is given, the work is remixed or transformed in some way, and the work is not used for commercial purposes.
