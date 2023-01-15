@@ -8,7 +8,7 @@
     "server-watch": "npx ts-node scripts/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["surrealdb"],
   "author": "",
   "license": "ISC",
   "dependencies": {
