@@ -11,14 +11,19 @@ const main = async () => {
         await fs.readdir('./queries')
     ).map(file => `./queries/${file}`);
     
-    let serverProcess = startServer();
-    await init(files);
-
+    let serverProcess;
+    
+    const bootup = async () => {
+        serverProcess = startServer();
+        await runQueries(files);
+    }
+    
+    bootup();
+    // This could be better by switching to 'all' and debouncing the callback
     watch(files).on('change', async (path: string) => {
         console.log(`${path} updated, killing and restarting server...`);
         serverProcess.kill();
-        serverProcess = startServer();
-        await init(files);
+        bootup();
     });
 };
 
@@ -29,9 +34,12 @@ const startServer = () => {
     return serverProc;
 };
 
-const init = async (files: string[]) => {
+const runQueries = async (files: string[]) => {
     files.map(file => new Promise((res, rej) => {
-        exec(`${IMPORT_STR} ${file}`, (err, output) => err ? rej(err) : res(output));
+        exec(`${IMPORT_STR} ${file}`, (err, output) => {
+            console.log(output);
+            return err ? rej(err) : res(output);
+        });
     }));
 };
 
