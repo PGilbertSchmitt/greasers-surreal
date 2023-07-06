@@ -1,10 +1,13 @@
 DEFINE TABLE user SCHEMAFULL
     PERMISSIONS
         FOR SELECT, UPDATE WHERE id = $user.id
-        FOR CREATE, DELETE NONE;
+        FOR DELETE NONE;
 DEFINE FIELD username ON TABLE user TYPE string
-    ASSERT string::length($value) >= 3
-       AND string::length($value) <= 32;
+    ASSERT string::len($value) >= 3
+       AND string::len($value) <= 32;
+-- DEFINE FIELD lobby ON TABLE user
+--     PERMISSIONS
+--         FOR CREATE NONE;
 
 DEFINE SCOPE players
     SESSION 5h

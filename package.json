@@ -4,15 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-seeds": "npx ts-node scripts/seed.ts",
-    "server-watch": "npx ts-node scripts/server.ts",
+    "seed": "npx ts-node scripts/seed.ts",
+    "server": "npx ts-node scripts/server.ts",
+    "flow": "npx ts-node flow.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["surrealdb"],
+  "keywords": [
+    "surrealdb"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "surrealdb.js": "^0.5.0"
+    "surrealdb.js": "^0.8.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
