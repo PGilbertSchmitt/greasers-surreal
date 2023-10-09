@@ -14,7 +14,7 @@ DEFINE FIELD owner ON TABLE lobby VALUE $before OR $auth;
 DEFINE FIELD pass ON TABLE lobby
     TYPE string
     ASSERT string::len($value) >= 6
-       AND string::len($value) <= 30
+       AND string::len($value) <= 32
     PERMISSIONS FOR SELECT WHERE owner == $auth;
 
 DEFINE FIELD maxPlayers ON TABLE lobby
@@ -26,6 +26,3 @@ DEFINE FIELD scoreThreshold ON TABLE lobby
     TYPE int
     ASSERT $value >= 3
        AND $value <= 20;
-
--- DEFINE FIELD players ON TABLE lobby TYPE array;
--- DEFINE FIELD players.* ON TABLE lobby TYPE string;

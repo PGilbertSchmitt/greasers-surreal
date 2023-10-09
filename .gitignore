@@ -1,3 +1,6 @@
 node_modules/
+.yalc/
+yalc.lock
+
 history.txt
-queries/*_seed.surql
+db_init/_*.surql

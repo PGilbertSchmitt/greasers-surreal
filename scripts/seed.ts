@@ -22,7 +22,7 @@ const buildCardSeeds = async () => {
     const nextPromptId = () => promptID++;
 
     try {
-        const responseSurqlFile = fs.createWriteStream('queries/_main_response_seed.surql');
+        const responseSurqlFile = fs.createWriteStream('db_init/_main_response_seed.surql');
         responseSurqlFile.write(SEED_TOMBSTONE);
         await processMainResponses(
             fs.readFileSync('card_data/main_responses.csv'),
@@ -31,7 +31,7 @@ const buildCardSeeds = async () => {
         );
         responseSurqlFile.close();
 
-        const promptSurqlFile = fs.createWriteStream('queries/_main_prompt_seed.surql');
+        const promptSurqlFile = fs.createWriteStream('db_init/_main_prompt_seed.surql');
         promptSurqlFile.write(SEED_TOMBSTONE);
         await processMainPrompts(
             fs.readFileSync('card_data/main_prompts.csv'),
@@ -87,7 +87,7 @@ const processMainPrompts = async (
         const [prompt, slots, ...isVersion] = record;
         const content = {
             prompt,
-            slots,
+            slots: parseInt(slots) || 1,
             versions: versionList.filter((_, idx) => isVersion[idx].length > 0),
         }
         file.write(`LET $data = ${JSON.stringify(content)};\nCREATE pc:${nextId()} CONTENT $data;\n`);

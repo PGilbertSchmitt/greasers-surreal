@@ -1,8 +1,8 @@
 DEFINE TABLE user SCHEMAFULL
     PERMISSIONS
         FOR SELECT FULL
-        FOR UPDATE WHERE id = $auth.id
-        FOR CREATE, DELETE NONE;
+        FOR UPDATE, DELETE WHERE id = $auth.id
+        FOR CREATE NONE;
 DEFINE FIELD username ON TABLE user TYPE string
     ASSERT string::len($value) >= 3
        AND string::len($value) <= 32; 
@@ -13,7 +13,8 @@ DEFINE EVENT user_delete ON TABLE user WHEN $event='DELETE' THEN {
 
 DEFINE SCOPE players
     SESSION 5h
-    SIGNUP (CREATE user SET username=$username);
+    SIGNUP (CREATE user SET username=$username)
+    SIGNIN (SELECT * FROM user WHERE username=$username);
 
 DEFINE TABLE authed
     AS SELECT id as userId FROM user

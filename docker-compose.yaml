@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  db:
+    image: surrealdb/surrealdb:latest
+    container_name: surrealdb
+    restart: always
+    ports:
+      - 8000:8000
+    command: start --user froot --pass froot --log trace memory
+  
